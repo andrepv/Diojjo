@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Login {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  {% endblock style %}
+</head>
+<body>
+{% block authentication %}
+<div class="uk-container uk-container-expand uk-padding">
+  <div class="uk-width-5-6@s uk-child-width-expand@s uk-margin-auto">
+    <div style="" class="uk-width-1-1@s uk-margin-auto">
+      <form method="POST" id="login_form" action="{% url 'login' %}">
+        {% csrf_token %}
+      <div class="heading">Login</div>
+
+        <div class="left"><br />
+        {% if form.errors %}
+          <div uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>User not found</p>
+          </div>
+        {% endif %}
+          <div class="uk-margin">
+            <input id="id_username" class="uk-input" 
+                   maxlength="25" name="username" type="text" placeholder="Username" />
+          </div>
+          <div class="uk-margin">
+            <input id="id_password" class="uk-input" 
+                 name="password" type="password" placeholder="Password" />
+          </div>
+          <input type="submit" value="Login" />
+        </div>
+
+      <div class="right">
+        <div class="connect">Connect with</div>
+          <a href="{% url 'social:begin' 'facebook' %}" class="facebook">
+            <span>Facebook</span>
+          </a> <br />
+          <a href="{% url 'social:begin' 'twitter' %}" class="twitter">
+            <span>Twitter</span>
+         </a> <br />
+         <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-plus">
+           <span>Google</span>
+         </a>
+      </div>
+
+     </form>
+    </div>
+  </div>
+</div>
+{% endblock authentication%}
+{% block javascript %}
+  <script src="{% static 'js/validation.min.js' %}"></script>
+  <script src="{% static 'js/auth.js' %}"></script>
+{% endblock javascript%}
+</body>

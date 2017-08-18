@@ -39,7 +39,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello'
+    'social_django',
+    'sorl.thumbnail',
+    'django_social_share',
+    'geoposition',
+    'taggit',
+    'hello',
+    'authentication',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,7 +123,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
+LOGIN_REDIRECT_URL = '/'
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)

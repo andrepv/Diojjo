@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Sign Up {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+  {% endblock style %}
+</head>
+<body>
+{% block authentication %}
+<div class="uk-container uk-container-expand uk-padding">
+  <div class="uk-width-5-6@s uk-child-width-expand@s uk-margin-auto">
+    <div style="" class="uk-width-1-1@s uk-margin-auto">
+      <form method="POST" id="signup_form" 
+            data-validate-username="{% url 'validate_username' %}">
+        {% csrf_token %}
+        <div class="heading">Sign Up</div>
+        <div class="left"><br/>
+          <div class="uk-margin">
+            <div class="uk-inline">
+              <span class="uk-form-icon uk-form-icon-flip" 
+                     id="name_check_ok" uk-icon="icon: check"></span>
+              <a href="#" class="uk-form-icon uk-form-icon-flip" 
+                          id="name_check_error" uk-icon="icon: warning"
+                          title="Username already exists" uk-tooltip></a> 
+              {{ user_form.username }}
+            </div>
+          </div>
+          {{user_form.username.errors}}
+          <div class="uk-margin">
+            {{ user_form.email }}
+          </div>
+          {{user_form.email.errors}}
+          <div class="uk-margin">
+            {{ user_form.password1 }}
+          </div>
+         {{user_form.password1.errors}}
+         <input type="submit" value="Sign Up" />
+       </div>
+
+       <div class="right">
+         <div class="connect">Connect with</div>
+         <a href="{% url 'social:begin' 'facebook' %}" class="facebook">
+           <span>Facebook</span>
+         </a> <br />
+         <a href="{% url 'social:begin' 'twitter' %}" class="twitter">
+           <span>Twitter</span>
+         </a> <br />
+         <a href="{% url 'social:begin' 'google-oauth2' %}" class="google-plus">
+           <span>Google</span>
+         </a>
+       </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock authentication%}
+{% block javascript %}
+  <script src="{% static 'js/validation.min.js' %}"></script>
+  <script src="{% static 'js/auth.js' %}"></script>
+{% endblock javascript%}
+</body>

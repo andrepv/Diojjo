@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="icon" href="{% static 'img/Geo.png' %}"> -->
   <link rel="stylesheet" href="{% static 'css/Uikit/uikit.min.css' %}">
-  <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <script src="{% static 'js/Jquery/jquery-3.2.1.min.js' %}"></script>
   <script src="{% static 'js/Uikit/uikit.min.js' %}"></script>
   <script src="{% static 'js/Uikit/uikit-icons.min.js' %}"></script>
@@ -37,25 +37,27 @@
          placeholder="Search..." style="border-radius: 100px;">
       </form>
     </li>
-    <!--User Icon and Dropdown-->
-    <li>
+        <li>
+      {% if user.is_authenticated %}
+        <a href="#">
+       {{user.username}}
         </a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="">Profile</a></li>
             <li><a href="">Settings</a></li>
-            <li><a href="">Logout</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
           </ul>
         </div>
-
+      {% else %}
         <li>
           <a style="font-weight: 500;" 
-             href="">LOG IN</a>
+             href="{% url 'login' %}">LOG IN</a>
         </li>
         <li>
-        <a style="font-weight: 500;" href="">SIGN UP</a>
+        <a style="font-weight: 500;" href="{% url 'signup' %}">SIGN UP</a>
         </li>
-
+      {% endif %}
     </ul>
     <!--Menu For Mobile Divice-->
     <a class="uk-navbar-toggle uk-hidden@m" uk-toggle="target: #offcanvas-usage">
