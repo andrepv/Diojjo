@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'django_social_share',
     'geoposition',
     'taggit',
+    'storages',
     'hello',
     'authentication',
 )
@@ -120,6 +121,23 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, name, email'
 }
+
+AWS_ACCESS_KEY_ID = 'AKIAIAPRHL4IAQCJGX4Q'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'diojo-static'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_PRELOAD_METADATA = True
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+DEFAULT_FILE_STORAGE = 'gettingstarted.storage_backends.MediaStorage' 
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
