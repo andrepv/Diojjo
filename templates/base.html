@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    {% block title %} Diojo {% endblock title %}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" href="{% static 'img/Geo.png' %}"> -->
+  <link rel="stylesheet" href="{% static 'css/Uikit/uikit.min.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/base.css' %}"> -->
+  <script src="{% static 'js/Jquery/jquery-3.2.1.min.js' %}"></script>
+  <script src="{% static 'js/Uikit/uikit.min.js' %}"></script>
+  <script src="{% static 'js/Uikit/uikit-icons.min.js' %}"></script>
+  {% block style %}{% endblock %}
+  <meta charset="utf-8">
+</head>
+<body>
+<div class="uk-offcanvas-content">
+<!--NAVBAR START-->
+<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
+<nav class="uk-navbar-container" uk-navbar="mode: click">
+  <!--Logo-->
+  <div class="uk-navbar-left uk-margin-large-left">
+    <a class="uk-navbar-item uk-logo" href="">
+      <img src="{% static 'img/Geo.png' %}" alt="logo" width="40px" height="40px">
+    </a>
+  </div>
+  <div class="uk-navbar-right uk-margin-medium-right">
+    <ul class="uk-navbar-nav uk-visible@m">
+    <!--Search Input-->
+    <li>
+      <form class="uk-search uk-search-default uk-margin-top" 
+            action="">
+        <span uk-search-icon></span>
+        <input class="uk-search-input" name="q" type="search" 
+         placeholder="Search..." style="border-radius: 100px;">
+      </form>
+    </li>
+    <!--User Icon and Dropdown-->
+    <li>
+        </a>
+        <div class="uk-navbar-dropdown">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li><a href="">Profile</a></li>
+            <li><a href="">Settings</a></li>
+            <li><a href="">Logout</a></li>
+          </ul>
+        </div>
+
+        <li>
+          <a style="font-weight: 500;" 
+             href="">LOG IN</a>
+        </li>
+        <li>
+        <a style="font-weight: 500;" href="">SIGN UP</a>
+        </li>
+
+    </ul>
+    <!--Menu For Mobile Divice-->
+    <a class="uk-navbar-toggle uk-hidden@m" uk-toggle="target: #offcanvas-usage">
+      <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
+    </a>
+  </div>
+</nav>
+</div>
+</div>
+  <div id="offcanvas-usage" uk-offcanvas="overlay: true; mode: push">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <ul class="uk-nav uk-nav-default">
+      {% if user.is_authenticated %}
+        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Profile</a></li>
+        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: settings"></span> Settings</a></li>
+        <li class="uk-nav-divider"></li>
+        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Logout</a></li>
+      {% else %}
+        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: sign-in"></span>Log in</a></li>
+        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: sign-in"></span> Sign Up</a></li>
+      {% endif %}
+        <li>
+          <form class="uk-search uk-search-default uk-margin-top" 
+                action="">
+            <span uk-search-icon></span>
+            <input class="uk-search-input" name="q" type="search" 
+                   placeholder="Search..." style="border-radius: 100px;">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+<!--NAVBAR END-->
+{% block authentication %}{% endblock %}
+{% block main %}{% endblock main %}
+{% block javascript %}{% endblock javascript%}
+</body>
+</html>
+
