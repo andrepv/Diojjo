@@ -1,1 +1,1 @@
-web: gettingstarted config.wsgi --log-file -
+web: gunicorn gettingstarted.wsgi --log-file -
