@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_social_share',
     'geoposition',
-    'endless_pagination',
     'taggit',
     'storages',
     'hello',
