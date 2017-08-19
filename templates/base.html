@@ -57,7 +57,7 @@
         </a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li><a href="">Profile</a></li>
+            <li><a href="{% url 'profile' user.username %}">Profile</a></li>
             <li><a href="{% url 'edit' %}">Settings</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
           </ul>
@@ -85,8 +85,8 @@
       <button class="uk-offcanvas-close" type="button" uk-close></button>
       <ul class="uk-nav uk-nav-default">
       {% if user.is_authenticated %}
-        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: user"></span>Profile</a></li>
-        <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: settings"></span> Settings</a></li>
+        <li><a href="{% url 'profile' user.username %}"><span class="uk-margin-small-right" uk-icon="icon: user"></span>Profile</a></li>
+        <li><a href="{% url 'edit' %}"><span class="uk-margin-small-right" uk-icon="icon: settings"></span> Settings</a></li>
         <li class="uk-nav-divider"></li>
         <li><a href="{% url 'logout' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Logout</a></li>
       {% else %}

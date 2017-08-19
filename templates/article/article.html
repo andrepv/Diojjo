@@ -54,7 +54,7 @@ function initMap() {
             <div class="uk-width-expand">
               <h1 class="uk-margin-remove">{{article.title}}</h1>
               <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-                <li>by&nbsp;<a href="">{{article.author}}</a></li>
+                <li>by&nbsp;<a href="{% url 'profile' username=article.author%}">{{article.author}}</a></li>
                 <li>{{article.created_date|age}}</li>
               </ul>
             </div>
