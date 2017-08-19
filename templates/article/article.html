@@ -11,7 +11,8 @@
   </title>
   {% block style %}
   <link rel="stylesheet" href="{% static 'css/default.css' %}">
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.css" rel="stylesheet">
+  <link  href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.js"></script>
   <style type="text/css">
     .like-icon {
       width: 20px;
@@ -113,7 +114,6 @@ function initMap() {
 </div>
 {% endblock main %}
 {% block javascript %}
-<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.js"></script>
 <script src="{% static 'js/article.js' %}"></script>
 {% endblock javascript%}
 </body>
