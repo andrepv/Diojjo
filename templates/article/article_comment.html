@@ -19,7 +19,7 @@
     <span class="comment-text">{{comment.comment|linebreaks}}</span>
     <div class="bottom-comment">
       <div class="comment-date">
-        <a class="uk-margin-small-right uk-link-reset" href="{% url 'profile' comment.user.username %}">{{comment.user}}</a>|
+        <a class="uk-margin-small-right uk-link-reset" href="">{{comment.user}}</a>|
         <span class="uk-margin-small-left uk-margin-small-right">{{comment.date|age}}</span>
         {% ifequal comment.user request.user%}
        |<span class="uk-margin-small-left">
