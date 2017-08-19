@@ -32,7 +32,7 @@
     <!--Search Input-->
     <li>
       <form class="uk-search uk-search-default uk-margin-top" 
-            action="">
+            action="{% url 'search' %}">
         <span uk-search-icon></span>
         <input class="uk-search-input" name="q" type="search" 
          placeholder="Search..." style="border-radius: 100px;">
@@ -95,7 +95,7 @@
       {% endif %}
         <li>
           <form class="uk-search uk-search-default uk-margin-top" 
-                action="">
+                action="{% url 'search' %}">
             <span uk-search-icon></span>
             <input class="uk-search-input" name="q" type="search" 
                    placeholder="Search..." style="border-radius: 100px;">

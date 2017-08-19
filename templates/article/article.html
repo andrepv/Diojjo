@@ -72,7 +72,7 @@ function initMap() {
           <div uk-grid>
             <div class="uk-width-expand@s">
             {% for tag in article.tags.names%}
-              <a href="" class="uk-badge">
+              <a href="{% url 'tag' tag %}" class="uk-badge">
                 <span class="uk-badge">{{ tag }}</span>
              </a>
             {% endfor %}

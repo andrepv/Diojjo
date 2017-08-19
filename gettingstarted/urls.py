@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 from authentication import views as diojo_auth_views
 from account import views as account_views
 from article import views as article_views
+from search import views as search_views
 from django.contrib import admin
 admin.autodiscover()
 
@@ -42,6 +43,9 @@ urlpatterns = [
     url(r'^delete/$', article_views.delete_article, name='delete'),
     url(r'^edit/(?P<pk>[0-9]+)/$', article_views.edit, name='edit'),
     url(r'^like/', article_views.like, name='like'),
+
+    url(r'^search/$', search_views.search, name='search'),
+    url(r'^tag/(?P<tag_name>.+)/$', search_views.tag, name='tag'),
 
     url(r'^admin/', include(admin.site.urls)),
 ]

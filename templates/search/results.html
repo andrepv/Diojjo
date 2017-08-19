@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load time_ago %}
+{% load endless %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Diojo {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.css' %}">
+    <style>
+      .like-icon {
+        width: 20px;
+        height: 16px;
+        display: inline-block;
+        position: relative;
+        margin-right: .25em;
+        font-size: 1.5rem;
+        background: url("{% static 'img/heart-colored.svg' %}") no-repeat center;
+        background-size: 100%;
+        -webkit-animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+    </style>
+	{% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-background-muted uk-padding">
+  <!--Grid START-->
+  <div class="uk-margin-auto uk-width-3-4@m uk-padding-remove">
+    <div class="main-container" style="margin: 10px 0 0 25px;">
+     <!--Card with artical preview-->
+       {% include page_template %}
+    </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="{% static 'js/articles.js' %}"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/static/endless_pagination/js/endless-pagination.js"></script>
+<script>$.endlessPaginate();</script>
+<script src="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.js' %}"></script>
+{% endblock javascript%}
+</body>
