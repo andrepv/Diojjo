@@ -43,10 +43,13 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_social_share',
     'geoposition',
+    'endless_pagination',
     'taggit',
     'storages',
     'hello',
     'authentication',
+    'account',
+    'article',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,6 +118,8 @@ SOCIAL_AUTH_TWITTER_SECRET = 'b3XFfIMo0mdSCZ4wRmdew4REEWslcUvib3Rrjz7yWTrZEw29Vr
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '795774835937-5vmom70hjl6o4vnru3pviv3b6i7ebee6.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'vClsp2CyfVEIzI1n5-DGnIuB'
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyAszZZzmF2tiDiGUtHjLgjnMSymV-n1be0'
 
 WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 

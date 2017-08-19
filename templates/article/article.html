@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load time_ago %}
+{% load social_share %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    {% block title %} {{article.title}} {% endblock title %}
+  </title>
+  {% block style %}
+  <link rel="stylesheet" href="{% static 'css/default.css' %}">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.css" rel="stylesheet">
+  <style type="text/css">
+    .like-icon {
+      width: 20px;
+      height: 16px;
+      display: inline-block;
+      position: relative;
+      margin-right: .25em;
+      font-size: 1.5rem;
+      background: url("{% static 'img/heart-colored.svg' %}") no-repeat center;
+      background-size: 100%;
+      -webkit-animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      }
+  </style>
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<script>
+function initMap() {
+  var uluru = {lat: {{location.position.latitude}}, 
+               lng: {{location.position.longitude }} };
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAszZZzmF2tiDiGUtHjLgjnMSymV-n1be0&callback=initMap"></script>
+<div class="uk-container uk-padding uk-background-muted">
+    <div class="uk-width-3-4@s uk-padding-remove uk-margin-auto">
+      <div class="uk-width-3-4@s uk-margin-auto">
+        <article>
+          <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
+            <div class="uk-width-expand">
+              <h1 class="uk-margin-remove">{{article.title}}</h1>
+              <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                <li>by&nbsp;<a href="">{{article.author}}</a></li>
+                <li>{{article.created_date|age}}</li>
+              </ul>
+            </div>
+           </header>
+          <div class="uk-width-1-1@s">
+            <div id="map"></div>
+          </div>
+          <p>{{article.text|linebreaks}}</p>
+          <div class="fotorama uk-width-3-4@s uk-margin-auto" data-nav="thumbs">
+          {% for img in article.get_images %}
+            <img src="{{img.image.url}}" width="200" height="200">
+          {% endfor %}
+          </div>
+          <hr class="uk-divider-small">
+          <div uk-grid>
+            <div class="uk-width-expand@s">
+            {% for tag in article.tags.names%}
+              <a href="" class="uk-badge">
+                <span class="uk-badge">{{ tag }}</span>
+             </a>
+            {% endfor %}
+            </div>
+            <div class="uk-text-right@s uk-width-expand@s">
+
+           </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <!-- Comments Block -->
+    <div class="uk-section uk-width-3-4@s uk-margin-auto">
+      <h6 class="uk-text-lead edit_title uk-margin-xlarge-left">Comments</h6>
+      <div class="comment uk-width-2-3@s uk-margin-auto">
+      {% if user.is_authenticated %}
+        <form role="form" id="comment-form">
+          {% csrf_token %}
+          <input type="hidden" name="article" value="{{ article.pk }}">
+          <textarea type="text" class="uk-input comment-area" placeholder="Add comment..."
+                    name="comment" rows="3" maxlength="255"></textarea>
+          <div class="uk-margin uk-text-right">
+            <button class="uk-button post_comment">Post</button>
+          </div>
+       </form>
+       <div id="comment-list">
+       {% else %}
+        <p>Login to post comments</p>
+       {% endif %}
+
+       {% for comment in article.get_comments %}
+         {% include 'article/article_comment.html' with comment=comment %}
+       {% empty %}
+           <p>No Comments Yet</p>
+       {% endfor %}
+       </div>
+     </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.5.2/fotorama.js"></script>
+<script src="{% static 'js/article.js' %}"></script>
+{% endblock javascript%}
+</body>
+</html>
+
+
+
+
+
+
+

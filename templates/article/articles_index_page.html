@@ -1,0 +1,91 @@
+{% load staticfiles %}
+{% load thumbnail %}
+{% load time_ago %}
+{% load endless %}
+
+{% lazy_paginate 10,20 article %}
+{% for articles in article %}
+  <div class="uk-card uk-card-default uk-margin" uk-grid>
+    <div class="uk-card-media-left uk-cover-container uk-width-1-4@s">
+      {% for img in articles.get_images|slice:":1" %}
+        {% thumbnail img.image "200x200" crop="center" as im %}
+      <img src="{{ im.url}}" width="{{ im.width }}" height="{{ im.height }}" uk-cover>
+        {% endthumbnail %}
+       {% endfor %}
+    </div>
+    <div class="uk-card-body uk-width-expand" style="padding: 15px 15px;">
+
+      <div class="uk-flex uk-flex-middle">
+        <div class="uk-width-5-5">
+          <h3 class="uk-card-title uk-margin-remove-bottom">
+            <a class="uk-link-reset" href="{% url 'article_detail' pk=articles.pk%}">
+              {{ articles.title }}
+            </a>
+          </h3>
+          <small class="uk-flex uk-flex-middle">
+            <span class="clock-icon" uk-icon="icon: clock; ratio: 0.7"></span>
+             {{ articles.created_date|age }}
+          </small>
+        </div>
+         {% ifequal articles.author user%}
+         <div class="uk-inline">
+            <a class="uk-link-reset clock-icon" 
+               uk-icon="icon: more-vertical; ratio: 0.7"
+               type="button"></a>
+            <div uk-dropdown="mode: click"
+                 uk-dropdown="pos: top-left" 
+                 class="uk-padding-remove">
+              <ul class="uk-list">
+                <li><a class="uk-link-reset" 
+                       href="{% url 'edit' pk=articles.pk%}">Edit</a></li>
+                <li><a class="delete uk-link-reset" 
+                       csrf="{{ csrf_token }}"
+                       post-id="{{articles.pk}}">Delete</a></li>
+              </ul>
+            </div>
+          </div>
+        {% endifequal %}
+      </div>
+
+      <p>{{ articles.text|linebreaks|truncatewords_html:25 }}</p>
+      <div class="uk-align-right uk-visible@s">
+        {% for tag in articles.tags.names|slice:":3" %}
+        <a class="uk-link-reset" href="">
+          <span class="uk-badge">{{ tag }}</span>
+        </a>
+        {% endfor %}
+      </div>
+      {% if user.is_authenticated %}
+      {% if user in articles.get_likers %}
+      <a href="#" id="like-button" class="liked"
+         article-id="{{ articles.pk }}" csrf="{{ csrf_token }}">
+        <span class='like-icon'>
+          <div class='heart-animation-1'></div>
+        </span>
+        <span id='like-count'>{{articles.get_likes}}</span>
+      </a>
+      {% else %}
+      <a href="#" id="like-button" 
+          article-id="{{ articles.pk }}" csrf="{{ csrf_token }}">
+        <span class='like-icon'>
+          <div class='heart-animation-1'></div>
+        </span>
+        <span id='like-count'>{{articles.get_likes}}</span>
+      </a>
+      {% endif %}
+      {% else %}
+      <a style="pointer-events: none;" href="#" id="like-button" disabled>
+        <span class='like-icon'>
+          <div class='heart-animation-1'></div>
+        </span>
+        <span id='like-count'>{{articles.get_likes}}</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% empty %}
+  <div class="uk-text-center">
+    <h3 class="uk-text-bold">No Results</h3>
+  </div>
+  {% endfor %}
+ {% show_more %}

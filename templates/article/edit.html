@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    {% block title %} Edit {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/write.css' %}">
+    <style type="text/css">
+      #id_tags{
+    font-size: 14px;
+    height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 38px;
+    border-radius: 10px;
+    background-color: #ebebeb;
+    padding-left: 15px;
+    max-width: 100%;
+    width: 98%;
+    border: 0 none;
+    padding: 0 6px;
+    color: #666;
+    border: 1px solid #e5e5e5;
+    -webkit-transition: .2s ease-in-out;
+    transition: .2s ease-in-out;
+    -webkit-transition-property: color,background-color,border;
+    transition-property: color,background-color,border;
+      }
+    #id_tags:focus {
+      outline: none !important;
+      }
+    </style>
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-background-muted uk-padding">
+  <h2 class="uk-text-lead edit_title uk-text-center">Edit</h2>
+  <div class="uk-margin-auto uk-width-3-4@s uk-child-width-expand@s uk-padding-small" uk-grid>
+  {% if messages %}
+    <div class="uk-width-xxlarge uk-margin-auto uk-padding">
+    {% for message in messages %}
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+   <div class="uk-width-large uk-margin-auto uk-padding-small">
+    <form method="POST" action="{% url 'edit' form.instance.pk %}" id="write_form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="uk-margin">
+        {{ form.title }}
+      </div>
+      {{ form.title.errors }}
+      <div class="uk-margin">
+        {{ form.text }}
+      </div>
+      {{ form.location.errors }}
+      <div class="uk-margin">
+        {{ form.tags }}
+        <p class="uk-text-meta">Use commas to separate the tags</p>
+      </div>
+      <hr class="uk-divider-small">
+     </div>
+    </div>
+       <div class="uk-width-xlarge uk-margin-auto"
+         style="border-radius: 20px;">
+      <div class="uk-inline">
+        <span uk-icon="icon: location"></span>add location
+      </div>
+        {{ location.as_p }}
+        {{ location.media }}
+      </div>
+        <div class="uk-width-large uk-text-center">
+      <button type="submit" class='uk-button text-center save-button'>SAVE</button>
+    </div>
+</form>
+</div>
+{% endblock main %}
+</body>
+</html>

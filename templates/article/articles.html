@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load time_ago %}
+{% load endless %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Diojo {% endblock title %}
+  </title>
+  {% block style %}
+  <link rel="stylesheet" href="{% static 'css/default.css' %}">
+  <link rel="stylesheet" href="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.css' %}">
+  <style>
+    .like-icon {
+      width: 20px;
+      height: 16px;
+      display: inline-block;
+      position: relative;
+      margin-right: .25em;
+      font-size: 1.5rem;
+      background: url("{% static 'img/heart-colored.svg' %}") no-repeat center;
+      background-size: 100%;
+      -webkit-animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      }
+    </style>
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-background-muted uk-padding">
+  <div class="uk-text-center">
+    <h4 class="show-place-title">
+      Show the Best Places to Visit </h4>
+    <hr class="uk-divider-small">
+    <a href="{% url 'new_article' %}" class="uk-button uk-button-default new-place-button">Add a new place</a>
+  </div>
+  <br>
+  {% if not 'tag' in request.path %}
+  <div class="uk-width-auto@m">
+    <ul class="uk-subnav uk-margin-xlarge-left">
+     <li
+      {% if not 'new' in request.path %}
+         class="uk-active"
+      {% endif %}>
+      <a href="/">Popular</a></li>
+      <li
+      {% if 'new' in request.path %}
+         class="uk-active"
+      {% endif %}>
+      <a href="{% url 'new' %}">New</a></li>
+    </ul>
+  </div>
+  {% endif %}
+  <!--Grid START-->
+  <div class="uk-margin-auto uk-width-3-4@m">
+    <div class="main-container" style="margin: 10px 0 0 25px;">
+       {% include page_template %}
+    </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="{% static 'js/articles.js' %}"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/static/endless_pagination/js/endless-pagination.js"></script>
+<script>$.endlessPaginate();</script>
+<script src="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.js' %}"></script>
+{% endblock javascript%}
+</body>

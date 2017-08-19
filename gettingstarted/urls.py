@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 from authentication import views as diojo_auth_views
 from account import views as account_views
+from article import views as article_views
 from django.contrib import admin
 admin.autodiscover()
 
@@ -14,7 +15,7 @@ import hello.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', hello.views.index, name='index'),
+    url(r'^$', article_views.articles, name='articles'),
     url(r'^signup/', diojo_auth_views.signup, name='signup'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^login/$', auth_views.login, {
@@ -22,10 +23,21 @@ urlpatterns = [
     url(r'^logout', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^ajax/validate_username/$', diojo_auth_views.validate_username,
         name='validate_username'),
+
     url(r'^profile/edit/$', account_views.edit, name='edit'),
     url(r'^profile/picture/$', account_views.picture, name='picture'),
     url(r'^profile/upload_picture/$', account_views.upload_picture,
         name='upload_picture'),
-    url(r'^db', hello.views.db, name='db'),
+
+    url(r'^post/new/$', article_views.new_article, name='new_article'),
+    url(r'^new/$', article_views.new, name='new'),
+    url(r'^post/(?P<pk>[0-9]+)/$', article_views.article_detail,
+        name='article_detail'),
+    url(r'^post/comment/$', article_views.comment, name='comment'),
+    url(r'^remove/$', article_views.remove, name='remove'),
+    url(r'^delete/$', article_views.delete_article, name='delete'),
+    url(r'^edit/(?P<pk>[0-9]+)/$', article_views.edit, name='edit'),
+    url(r'^like/', article_views.like, name='like'),
+
     url(r'^admin/', include(admin.site.urls)),
 ]

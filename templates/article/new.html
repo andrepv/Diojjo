@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    {% block title %} New {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/write.css' %}">
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-background-muted uk-padding">
+  <h2 class="uk-text-lead edit_title uk-text-center">New Place</h2>
+  <div class="uk-margin-auto uk-width-3-4@s uk-child-width-expand@s uk-padding-small" uk-grid>
+  {% if messages %}
+    <div class="uk-width-xxlarge uk-margin-auto uk-padding">
+    {% for message in messages %}
+      <div class="uk-alert-success" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+  <div class="uk-width-large uk-margin-auto uk-padding-small">
+    <form method="POST" id="write_form" 
+          action="{% url 'new_article' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="uk-margin">
+        {{ form.title }}
+      </div>
+      {{ form.title.errors }}
+      <div class="uk-margin">
+        {{ form.text }}
+        <span class="counter"></span>
+      </div>
+      <div class="uk-margin">
+        {{ form.location }}
+      </div>
+      {{ form.location.errors }}
+      <div class="uk-margin">
+        <input placeholder="Tags (for example, Museum, Beach...)" class="uk-input" id="id_tags" name="tags" type="text">
+        <p class="uk-text-meta">Use commas to separate the tags</p>
+      </div>
+      <hr class="uk-divider-small">
+      <div class="image-input uk-margin">
+        <p class="uk-text-meta">Upload Images (JPG/JPEG)</p>
+        <input id="id_image" accept="image/jpeg,image/jpg" name="image" type="file" multiple="">
+        <hr class="uk-divider-small">
+      </div>
+     </div>
+    </div>
+
+    <div class="uk-width-xlarge uk-margin-auto"
+         style="border-radius: 20px;">
+      <div class="uk-inline">
+        <span uk-icon="icon: location"></span>add location
+      </div>
+    {{ located.media }}
+    {{ located.as_p }}
+    </div>
+    <div class="uk-width-large uk-text-center">
+      <button type="submit" class='uk-button text-center save-button'>SAVE</button>
+    </div>
+  </form>
+
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="{% static 'js/validation.min.js' %}"></script>
+<script>
+	$("#write_form").validate({
+	rules:
+	{
+		title: {
+			required: true
+		},
+		image: {
+			required: true
+		},
+    // position_0: {
+    //   required: true
+    // },
+    // position_1: {
+    //   required: true
+    // },
+	},
+});
+$(document).ready(function () {
+    var area = $('form#write_form textarea'),
+        counter = '',
+        counterValue = 3000, //change this to set the max character count
+        $areaValue = area.val(),
+        $areaLength = $areaValue.length,
+        submitButton = $('form#write_form input[type=submit]').hide();
+
+    counter = $('span.counter');
+    counter.html(counterValue); //display your set max length
+    area.attr('maxlength', counterValue); //apply max length to textarea
+    area.keyup(function () {
+      var $this = $(this);
+      $areaLength = $this.val().length; //get number of characters
+      counter.html(counterValue - $areaLength); //update counter
+    });
+  });
+
+var filesExt = ['jpg', 'jpeg']; // массив расширений
+$('input[type=file]').change(function(){
+    var parts = $(this).val().split('.');
+    var $fileUpload = $("input[type='file']");
+    if(filesExt.join().search(parts[parts.length - 1]) != -1){
+    } else {
+        UIkit.notification("Not an accepted file type", {status: 'danger'});
+        $($fileUpload).val("");
+    }
+    if (parseInt($fileUpload.get(0).files.length)>15){
+      UIkit.notification("You can only upload a maximum of 15 files", {status: 'danger'});
+      $($fileUpload).val("");
+    }
+});
+</script>
+{% endblock javascript%}
+</body>
+</html>

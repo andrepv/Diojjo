@@ -1,0 +1,33 @@
+{% load time_ago %}
+{% load staticfiles %}
+{% load thumbnail %}
+<div class="comment-wrap">
+  <div class="photo">
+  {% if comment.user.profile.avatar %}
+  {% if not 'https' in comment.user.profile.avatar.name %}
+  {% thumbnail comment.user.profile.avatar "50x50" crop="center" as im %}
+    <img class="avatar" src="{{ im.url}}" width="{{ im.width }}" height="{{ im.height }}">
+  {% endthumbnail %}
+  {% else %}
+    <img class="avatar" src="{{ comment.user.profile.avatar }}" width="50px" height="50px">
+  {% endif %}
+  {% else %}
+    <img class="avatar" src="{% static 'img/no-image.png'%}" width="50px" height="50px">
+  {% endif %}
+  </div>
+  <div class="comment-block">
+    <span class="comment-text">{{comment.comment|linebreaks}}</span>
+    <div class="bottom-comment">
+      <div class="comment-date">
+        <a class="uk-margin-small-right uk-link-reset" href="{% url 'profile' comment.user.username %}">{{comment.user}}</a>|
+        <span class="uk-margin-small-left uk-margin-small-right">{{comment.date|age}}</span>
+        {% ifequal comment.user request.user%}
+       |<span class="uk-margin-small-left">
+          <a class="remove"  csrf="{{ csrf_token }}" 
+             comment-id="{{comment.pk}}">delete</a>
+        </span>
+        {% endifequal %}
+      </div>
+    </div>
+  </div>
+</div>

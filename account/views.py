@@ -58,4 +58,3 @@ def upload_picture(request):
     return JsonResponse(data)
 
 
-
