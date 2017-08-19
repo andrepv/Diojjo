@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} {{ page_user.username }} {% endblock title %}
+  </title>
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.css' %}">
+    <style>
+      .like-icon {
+        width: 20px;
+        height: 16px;
+        display: inline-block;
+        position: relative;
+        margin-right: .25em;
+        font-size: 1.5rem;
+        background: url("{% static 'img/heart-colored.svg' %}") no-repeat center;
+        background-size: 100%;
+        -webkit-animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        animation: heartUnlike 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+    </style>
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-padding uk-background-muted">
+  <div>
+    <div class="uk-width-3-4@s uk-card uk-card-default uk-margin-auto uk-text-center">
+      <div class="uk-card-body" style="padding: 15px 15px;">
+        <div class="uk-inline-clip uk-transition-toggle">
+          {% if page_user.username == user.username%}
+            <a href="{% url 'picture' %}">
+          {% endif %}
+          {% if page_user.profile.avatar %}
+            {% if 'document' in page_user.profile.avatar.name %}
+              {% thumbnail page_user.profile.avatar "200x200" crop="center" as im %}
+                <img class="avatar" src="{{ im.url }}" 
+                     width="{{ im.width }}" height="{{ im.height }}">
+              {% endthumbnail %}
+            {% else %}
+              <img class="avatar" src="{{ page_user.profile.avatar }}" 
+               width="200px" height="200px">
+            {% endif %}
+          {% else %}
+            <img src="{% static 'img/no_avatar.jpg'%}" width="200px" height="200px">
+          {% endif %}
+            </a>
+        </div>
+        <p class='uk-text-bold'>{{ page_user.username }}</p>
+        {% if page_user.profile.bio %}
+          <p class="uk-width-1-2@s uk-margin-auto">{{ page_user.profile.bio }}</p>
+        {% endif %}
+        {% if page_user.profile.location %}
+          <div class="uk-inline">
+            <span uk-icon="icon: location"></span>
+              {{ page_user.profile.location }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="uk-margin-auto uk-width-3-4@m uk-padding-remove">
+    <div class="main-container" style="margin: 10px 0 0 25px;">
+     <!--Card with artical preview-->
+       {% include page_template %}
+    </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="{% static 'js/articles.js' %}"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/static/endless_pagination/js/endless-pagination.js"></script>
+<script>$.endlessPaginate();</script>
+<script src="{% static 'js/jquery-confirm-master/dist/jquery-confirm.min.js' %}"></script>
+{% endblock javascript%}
+</body>

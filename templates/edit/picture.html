@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Profile Picture {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-padding">
+  <h2 class="uk-text-lead uk-text-center">Change Profile Picture</h2>
+    <div class="uk-width-3-4@s uk-section uk-section-muted uk-margin-auto uk-text-center">
+      <div class="uk-width-1-2@s uk-margin-auto">
+        {% if form.avatar.errors %}
+          <div class="uk-alert-danger" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ form.avatar.errors }}</p>
+          </div>
+        {% endif %}
+        <div class="uk-alert-success uk-hidden" uk-alert>
+          <a class="uk-alert-close" uk-close></a>
+          <p>Picture Uploaded</p>
+        </div>
+      </div>
+      <div class="uk-margin">
+        <button id="js-upload-photos" class="uk-button uk-button-default">Upload Picture</button>
+        <input id="fileupload" type="file" name="avatar"
+              style="display: none;"
+              data-url="{% url 'upload_picture' %}"
+              data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+      </div>
+      {% if not 'https' in user.profile.avatar.name %}
+        {% thumbnail user.profile.avatar "200x200" crop="center" as im %}
+          <img class="profile_pic" src="{{ im.url }}" 
+          width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+      {% else %}
+        <img class="profile_pic" src="{{ user.profile.avatar }}" width="200" height="200">
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+  <script src="{% static 'js/jQuery-File-Upload/js/vendor/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jQuery-File-Upload/js/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jQuery-File-Upload/js/jquery.fileupload.js' %}"></script>
+  <script src="{% static 'js/account.js' %}"></script>
+{% endblock javascript%}
+</body>

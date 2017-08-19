@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_social_share',
     'geoposition',
+    'endless_pagination',
     'taggit',
     'storages',
     'hello',
@@ -121,6 +122,7 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, name, email'
 }
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/profile/edit'
 
 AWS_ACCESS_KEY_ID = 'AKIAIAPRHL4IAQCJGX4Q'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -201,4 +203,4 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+THUMBNAIL_FORCE_OVERWRITE = True

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+  <title>
+    {% block title %} Edit {% endblock title %}
+  </title>
+  {% block style %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  {% endblock style %}
+</head>
+<body>
+{% block main %}
+<div class="uk-container uk-padding">
+  <h2 class="uk-text-lead edit_title uk-margin-xlarge-left">Edit your profile</h2>
+  <div class="uk-width-3-4@s uk-section uk-section-muted uk-margin-auto">
+    <div class="uk-width-1-2@s uk-margin-auto">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="uk-alert-success" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p>{{ message }}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form method="POST" id="edit_form" 
+           data-validate-username="{% url 'validate_username' %}">
+        {% csrf_token %}
+        <div class="uk-margin">
+          <div class="uk-inline">
+            <span class="uk-form-icon uk-form-icon-flip" 
+                            id="name_check_ok" 
+                            uk-icon="icon: check">
+            </span>
+            <a href="#" class="uk-form-icon uk-form-icon-flip" 
+                            id="name_check_error" 
+                            uk-icon="icon: warning"
+                            title="Username already exists" uk-tooltip>
+            </a> 
+            {{ form.username }}
+          </div>
+          {{form.username.errors}}
+        </div>
+        <div class="uk-margin">
+          <div class="uk-inline">
+            <span class="uk-form-icon" uk-icon="icon: location"></span>
+            {{ form.location }}
+          </div>
+        </div>
+        {{ form.location.errors }}
+        <div class="uk-margin">
+          {{ form.bio }}
+        </div>
+        {{ form.bio.errors }}
+        <button type="submit" class='uk-button'>SAVE</button>
+      </form><br>
+    </div>
+  </div>
+</div>
+{% endblock main %}
+{% block javascript %}
+<script src="{% static 'js/validation.min.js' %}"></script>
+<script src="{% static 'js/auth.js' %}"></script>
+{% endblock javascript%}
+</body>
