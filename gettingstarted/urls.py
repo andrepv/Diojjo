@@ -28,6 +28,10 @@ urlpatterns = [
     url(r'^profile/picture/$', account_views.picture, name='picture'),
     url(r'^profile/upload_picture/$', account_views.upload_picture,
         name='upload_picture'),
+    url(r'^user/(?P<username>[^/]+)/$', account_views.profile,
+        name='profile'),
+    url(r'^user/(?P<username>[^/]+)/liked/$', account_views.liked,
+        name='liked'),
 
     url(r'^post/new/$', article_views.new_article, name='new_article'),
     url(r'^new/$', article_views.new, name='new'),
