@@ -4,7 +4,7 @@ certifi==2017.7.27.1
 chardet==3.0.4
 defusedxml==0.5.0
 dj-database-url==0.4.1
-Django==1.11
+Django==1.8
 django-endless-pagination==2.0
 django-geoposition==0.3.0
 django-model-utils==3.0.0
@@ -34,7 +34,7 @@ s3transfer==0.1.10
 six==1.10.0
 social-auth-app-django==1.2.0
 social-auth-core==1.4.0
-sorl-thumbnail==12.3
+-e git+https://github.com/mariocesar/sorl-thumbnail.git@b88fc32a68d1f754e54afe4424cf7a40d0f848a2#egg=sorl_thumbnail
 urllib3==1.22
 virtualenv==15.1.0
 virtualenvwrapper-win==1.2.1
