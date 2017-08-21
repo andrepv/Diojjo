@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import dj_database_url
-
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -22,7 +22,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: change this before deploying to production!
-SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -112,16 +112,16 @@ SOCIAL_AUTH_PIPELINE = (
     'authentication.pipeline.get_avatar'
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1536339623053633'
-SOCIAL_AUTH_FACEBOOK_SECRET = '84f3b27a13b97c30dbb0d2c2481cb14d'
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
-SOCIAL_AUTH_TWITTER_KEY = 'sFAYMK3DJG4n5iAokF88FyvGE'
-SOCIAL_AUTH_TWITTER_SECRET = 'b3XFfIMo0mdSCZ4wRmdew4REEWslcUvib3Rrjz7yWTrZEw29Vr'
+SOCIAL_AUTH_TWITTER_KEY = config('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = config('SOCIAL_AUTH_TWITTER_SECRET')
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '795774835937-5vmom70hjl6o4vnru3pviv3b6i7ebee6.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'vClsp2CyfVEIzI1n5-DGnIuB'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
-GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyAszZZzmF2tiDiGUtHjLgjnMSymV-n1be0'
+GEOPOSITION_GOOGLE_MAPS_API_KEY = config('GEOPOSITION_GOOGLE_MAPS_API_KEY')
 
 WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 
@@ -130,8 +130,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/profile/edit'
 
-AWS_ACCESS_KEY_ID = 'AKIAIAPRHL4IAQCJGX4Q'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'diojo-static'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
