@@ -46,7 +46,6 @@ INSTALLED_APPS = (
     'endless_pagination',
     'taggit',
     'storages',
-    'hello',
     'authentication',
     'account',
     'article',
