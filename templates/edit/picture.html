@@ -34,7 +34,7 @@
               data-url="{% url 'upload_picture' %}"
               data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
       </div>
-      {% if not 'https' in user.profile.avatar.name %}
+      {% if not 'http' in user.profile.avatar.name %}
         {% thumbnail user.profile.avatar "200x200" crop="center" as im %}
           <img class="profile_pic" src="{{ im.url }}" 
           width="{{ im.width }}" height="{{ im.height }}">

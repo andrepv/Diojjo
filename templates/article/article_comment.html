@@ -4,7 +4,7 @@
 <div class="comment-wrap">
   <div class="photo">
   {% if comment.user.profile.avatar %}
-  {% if not 'https' in comment.user.profile.avatar.name %}
+  {% if not 'http' in comment.user.profile.avatar.name %}
   {% thumbnail comment.user.profile.avatar "50x50" crop="center" as im %}
     <img class="avatar" src="{{ im.url}}" width="{{ im.width }}" height="{{ im.height }}">
   {% endthumbnail %}

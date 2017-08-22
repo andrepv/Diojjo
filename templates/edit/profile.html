@@ -37,7 +37,7 @@
             <a href="{% url 'picture' %}">
           {% endif %}
           {% if page_user.profile.avatar %}
-            {% if not 'https' in page_user.profile.avatar.name %}
+            {% if not 'http' in page_user.profile.avatar.name %}
               {% thumbnail page_user.profile.avatar "200x200" crop="center" as im %}
                 <img class="avatar" src="{{ im.url }}" 
                      width="{{ im.width }}" height="{{ im.height }}">
