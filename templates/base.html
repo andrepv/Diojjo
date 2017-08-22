@@ -40,12 +40,12 @@
     </li>
         {% if user.is_authenticated %}
         <li>
-        <a href="{% url 'new_article' %}" uk-icon="icon: cloud-upload; ratio: 1.3"></a>
+        <a href="{% url 'new_article' %}" uk-icon="icon: cloud-upload; ratio: 1.2"></a>
          </li>
         <li>
         <a href="#">
         {% if user.profile.avatar %}
-          {% if not 'https' in user.profile.avatar.name %}
+          {% if not 'http' in user.profile.avatar.name %}
             {% thumbnail user.profile.avatar "30x30" crop="center" as im %}
               <img class="avatar" src="{{ im.url }}" 
               width="{{ im.width }}" height="{{ im.height }}">
@@ -58,6 +58,7 @@
           <span uk-icon="icon: user"></span>
         {% endif %}
         </a>
+        </li>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li><a href="{% url 'profile' user.username %}">Profile</a></li>
